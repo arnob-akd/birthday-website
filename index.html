@@ -150,36 +150,6 @@
         opacity: 0;
       }
     }
-
-    /* ---------------------------
-       CAKE AND BALLOONS: initially hidden
-       --------------------------- */
-    #cake-balloons {
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      opacity: 0;             /* hidden by default */
-      pointer-events: none;   /* do not interact while hidden */
-      transition: opacity 1s ease;
-    }
-    /* .show class toggles them to be visible */
-    #cake-balloons.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    #cake-balloons img {
-      max-width: 200px;
-      width: auto;
-      height: auto;
-      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
-      transition: transform 0.3s ease;
-    }
-    #cake-balloons img:hover {
-      transform: scale(1.05);
-    }
-
   </style>
 </head>
 <body>
@@ -192,24 +162,17 @@
 
   <!-- MAIN CONTENT -->
   <section id="main-content" class="hidden">
-    <!-- ONLINE MUSIC SOURCE (royalty-free from Pixabay, as an example) -->
+    <!-- Replace the src with a valid ONLINE MP3 link -->
     <audio 
       id="bg-music" 
-      src="https://cdn.pixabay.com/download/audio/2023/01/11/audio_17d9d58c15.mp3?filename=happy-birthday-129015.mp3" 
+      src="https://cdn.pixabay.com/download/audio/2023/01/11/audio_17d9d58c15.mp3?filename=happy-birthday-129015.mp3"
       loop>
     </audio>
 
     <div class="birthday-greeting">
-      <h1>Happy Birthday, <span class="heart">Ayon</span>!</h1>
+      <h1>Happy Birthday, <span class="heart">[NAME]</span>!</h1>
       <div class="typing-text" id="typing-text"></div>
       <button id="music-toggle">Play Music</button>
-
-      <!-- Initially hidden CAKE and BALLOONS container -->
-      <div id="cake-balloons">
-        <!-- Replace the src with your own local or online image link -->
-        <img src="https://via.placeholder.com/200x200.png?text=Cute+Cake" alt="Cute Birthday Cake" />
-        <img src="https://via.placeholder.com/200x250.png?text=Balloons" alt="Colorful Balloons" />
-      </div>
     </div>
   </section>
 
@@ -221,11 +184,11 @@
     const mainContent = document.getElementById('main-content');
 
     window.addEventListener('load', () => {
-      // Simulate a small delay (e.g., 2.5 seconds) for the loading screen
+      // Simulate a small delay (2.5 seconds) for the loading screen
       setTimeout(() => {
         // Fade out preloader
         preloader.style.opacity = '0';
-        // After the transition ends, hide it completely
+        // After the transition, hide it completely
         setTimeout(() => {
           preloader.style.display = 'none';
           // Show main content
@@ -283,70 +246,19 @@
     }
 
     /********************************************
-     * 3. BACKGROUND MUSIC TOGGLE + CAKE & BALLOONS
+     * 3. BACKGROUND MUSIC TOGGLE
      ********************************************/
     const musicToggle = document.getElementById("music-toggle");
     const bgMusic = document.getElementById("bg-music");
     let isPlaying = false;
-
-    // The container for the cake and balloons
-    const cakeBalloons = document.getElementById("cake-balloons");
 
     musicToggle.addEventListener("click", () => {
       if (!isPlaying) {
         // PLAY music
         bgMusic.play();
         musicToggle.textContent = "Pause Music";
-        isPlaying = true;
+        isP
 
-        // SHOW the cake and balloons
-        cakeBalloons.classList.add("show");
-      } else {
-        // PAUSE music
-        bgMusic.pause();
-        musicToggle.textContent = "Play Music";
-        isPlaying = false;
-
-        // HIDE the cake and balloons
-        cakeBalloons.classList.remove("show");
-      }
-    });
-
-    /********************************************
-     * 4. CONFETTI GENERATOR
-     ********************************************/
-    function generateConfetti() {
-      // Number of confetti pieces
-      const numberOfConfetti = 80; 
-      // Confetti colors
-      const confettiColors = ["#fff", "#ffd1dc", "#ff69b4", "#ffc0cb", "#c2fcff", "#ffe4e1"];
-
-      for (let i = 0; i < numberOfConfetti; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("confetti-piece");
-        document.body.appendChild(confetti);
-
-        // Randomize confetti positions and colors
-        const leftPosition = Math.random() * 100; // 0% to 100%
-        const size = Math.floor(Math.random() * 8 + 4); // size range
-        const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-        const delay = Math.random() * 2; // 0 to 2s
-        const duration = 3 + Math.random() * 2; // 3s to 5s
-
-        confetti.style.left = leftPosition + "%";
-        confetti.style.width = size + "px";
-        confetti.style.height = size + "px";
-        confetti.style.backgroundColor = color;
-        confetti.style.animationDelay = delay + "s";
-        confetti.style.animationDuration = duration + "s";
-
-        // Remove confetti after animation
-        setTimeout(() => {
-          confetti.remove();
-        }, (delay + duration) * 1000);
-      }
-
-      // Continuously generate confetti
       setTimeout(generateConfetti, 2000);
     }
   </script>
